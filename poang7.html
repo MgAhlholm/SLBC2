@@ -1,0 +1,226 @@
+<html style="height: 100%;">
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="http://koda.nu/simple.js">
+	var count=1;
+	var backgroundNr=0;
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart', 'table'], 'callback': drawCharts});
+      
+      function drawCharts(){
+        drawChart1();
+        drawChart2();
+	drawChart3();
+      }
+
+      function update(){
+	drawNextChart();
+	background();
+	sleep(6000);
+      }
+
+
+      // Set a callback to run when the Google Visualization API is loaded.
+//      google.charts.setOnLoadCallback(drawChart1);
+//      google.charts.setOnLoadCallback(drawChart2);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      
+	function drawChart1() {
+ 		 var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1aNHk6kAm-OBVrSFVt3x___apN8HiB3hC9qFQZLz9hAA/gviz/tq?gid=558078810&headers=1&range=1:7');
+		 query.send(handleQueryResponse1);
+	  }
+
+      function handleQueryResponse1(response) {
+         var data = response.getDataTable();
+         var chart = new google.visualization.Table(document.getElementById('chart'));
+         var options = {titel: 'Highescore',
+           				width: totalWidth -250,
+           				height: totalHeight - 240,
+           				allowHtml: true,
+                       };
+
+         chart.draw(data, options);   
+      }
+
+	function drawChart2() {
+        	var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1aNHk6kAm-OBVrSFVt3x___apN8HiB3hC9qFQZLz9hAA/gviz/tq?gid=558078810&range=A11:B17');
+		 query.send(handleQueryResponse2);
+	  }
+      
+
+      function handleQueryResponse2(response) {
+      	var data = response.getDataTable();
+        var chart = new google.visualization.BarChart(document.getElementById('chart'));
+	var options = {
+	   height: 400,
+	   width: totalWidth -300,
+	   title: 'Leader Board',
+	   titleTextStyle: {
+   	     fontSize: 25, // 12, 18 whatever you want (don't specify px)
+   	     bold: true,    // true or false
+   	     italic: false   // true of false
+	   }
+	}
+        chart.draw(data, options);   
+      }
+
+	function drawChart3() {
+        	var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1aNHk6kAm-OBVrSFVt3x___apN8HiB3hC9qFQZLz9hAA/gviz/tq?gid=1992898081&range=A1:C16');
+		 query.send(handleQueryResponse3);
+	  }
+      
+
+      function handleQueryResponse3(response) {
+      	var data = response.getDataTable();
+         var chart = new google.visualization.Table(document.getElementById('chart'));
+         var options = {titel: 'Highescore',
+           				width: 700,
+           				height: 700,
+           				allowHtml: true,
+                       };
+
+         chart.draw(data, options);   
+      }
+
+	function drawChart4() {
+   	     var data = new google.visualization.DataTable();
+   	     data.addColumn('string', 'Spelregeler');
+   	     data.addRows([
+		['Dommaren bestämmer vem som börjar på vilken sida. Tärningen slumpar startposition. Och robotarna ställs i markerad ruta på banan.'],
+		['Om roboten inte får plats i ramen i startläget får laget 10s tidstillägg i början av sitt program.'],
+		['Matchen är slut då någon av robotarna har åkt av med minst ett av sina stor hjul eller när tiden tar slut.'],
+        	['Varje match pågår i max 5 minuter.'],
+		['Man får inte röra roboten mellan att programmet har startat och matchen är slut / avbryts. Om detta händer avgör domaren om matchen ska avbrytas och om det beröra laget ska klassas som förlorare av matchen.'],
+		['Om båda lagen är överens om att robotarna hamnar i dödläge kan matchen avbrytas för att börja om, startläget slumpas om och timern startas om. Detta får dock hända max 2 gånger.'],
+		['Man får modifiera sin robot mellan sina matcher.'],
+		['2 match-poäng delas ut till vinnaren, båda lagen får 1 match-poäng var om ingen enskild vinnare kan utses och förloraren får 0 match-poäng.'],
+		['De två lag som har flest poäng när alla har mött alla möts i final.']
+		]);
+
+        	var table = new google.visualization.Table(document.getElementById('chart'));
+
+        	table.draw(data, {showRowNumber: true, width: totalWidth - 300, height: '100%'});
+   	   }
+	
+	function drawNextChart(){
+		clearScreen();
+		switch (count){
+		    case 0: 
+			drawChart1();
+		    break;
+			
+		    case 1: 
+			drawChart2();
+		    break;
+
+		    case 2:
+			drawChart3();
+		    break;
+
+		    case 3:
+			drawChart4();
+		    break;
+		}
+
+		text(7, 25, 7, "Count: " + count, "#FFFFFF");
+		count ++;
+		count %= 4;
+
+//	Alla lags tider
+//	Tre Bästa tiderna och Tre bästa poängen
+//	SLBC Poäng
+//	Spelregler
+	}
+      
+
+	function background() {
+	   document.body.style.backgroundColor = "#000000";
+	   var backgroundNr = Math.floor((Math.random() * 14));
+//	   backgroundNr ++;
+	   backgroundNr %= 14
+
+	   text(7, 15, 7, "BackgrundNr: " + backgroundNr, "#FFFFFF");
+	   
+           switch (backgroundNr){
+	      case 0: 
+	 	   document.body.style.backgroundImage = "url('pic/terminator.jpg')";
+		   document.body.style.backgroundSize = "width: 100";
+	      break;
+	      case 1:
+		   document.body.style.backgroundSize = "width: 100";
+	 	   document.body.style.backgroundImage = "url('pic/marvin.jpg')";
+//		   document.body.style.backgroundSize = "width: totalWidth";
+	      break;
+	      case 2: 
+	 	   document.body.style.backgroundImage = "url('pic/bb8.jpg')";
+		   document.body.style.backgroundSize = "width: totalWidth";
+	      break;
+	      case 3: 
+	 	   document.body.style.backgroundImage = "url('pic/antom.jpg')";
+	      break;
+	      case 4: 
+	 	   document.body.style.backgroundImage = "url('pic/midas.jpg')";
+		   document.body.style.backgroundSize = "width: totalWidth";
+	      break;
+	      case 5: 
+	 	   document.body.style.backgroundImage = "url('pic/ambuch.jpg')";
+		   document.body.style.backgroundSize = "width: totalWidth";
+	      break;
+	      case 6: 
+	 	   document.body.style.backgroundImage = "url('pic/cyberman.jpg')";
+	      break;
+	      case 7: 
+	 	   document.body.style.backgroundImage = "url('pic/dalek.jpg')";
+	      break;
+	      case 8: 
+	 	   document.body.style.backgroundImage = "url('pic/i_robot.jpg')";
+	      break;
+	      case 9: 
+	 	   document.body.style.backgroundImage = "url('pic/wall-e_eve.jpg')";
+	      break;
+	      case 10: 
+	 	   document.body.style.backgroundImage = "url('pic/R2D2.jpg')";
+	      break;
+	      case 11: 
+	 	   document.body.style.backgroundImage = "url('pic/3CPO.jpg')";
+	      break;
+	      case 12: 
+	 	   document.body.style.backgroundImage = "url('pic/bumblebee.jpg')";
+	      break;
+	      case 13: 
+	 	   document.body.style.backgroundImage = "url('pic/OptimusPrime.jpg')";
+	      break;
+
+	   }
+	}
+      
+      
+      function sleep(miliseconds) {
+        var currentTime = new Date().getTime();
+        while (currentTime + miliseconds >= new Date().getTime()) {
+        }
+      }
+      
+    </script>
+    <link href="mall.css" rel="stylesheet" type=""text/css">  
+    <title>7:ans poäng</title>
+  </head>
+
+  <body style="height: 100% - 20px">
+	<table style="height: 100%;" width=100% border = 0>
+	  <tr>
+	    <td height=100% align="center" valign="center">	
+    		<!--Div that will hold the pie chart-->
+    		<div id="chart"></div>
+	    </td>
+	  </tr>
+	</table>
+  </body>
+</html>
+
+

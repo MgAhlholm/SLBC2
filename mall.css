@@ -1,0 +1,52 @@
+      body{
+        font-size: 20px;
+	 background-color: #000000;
+      }
+
+      H1{
+	color: #FFFFFF;
+	margin-left: 150px;
+	margin-top: 200px;
+      }
+
+      p{
+	color: #FFFFFF;
+	margin-left: 150px;
+      }
+
+	.google-visualization-table-table .gradient,
+	.google-visualization-table-div-page.gradient {
+		background: #F4F4F4 !important;
+		color:#444444;
+		font-size:23pt!important;
+		height: 80pt;
+	}
+
+	.google-visualization-BarChart-titleTextStyle {
+		fontSize: 25 !important;
+	}
+
+	.google-visualization-table-table {
+		valign:center!important;
+//		text-align: center !important;
+		font-size:18pt!important;
+	}
+
+	.google-visualization-table-td{
+		tetxt-valign:center!important;
+		right: 0 !important;
+		left: 10 !important;
+	}
+
+	a:link {
+		color: #a812ae;
+		text-decoration: underline;
+	}
+	
+	a:visited {
+		color: #a812ae;
+	}
+
+	a:hover {
+		text-decoration: none;
+	}
